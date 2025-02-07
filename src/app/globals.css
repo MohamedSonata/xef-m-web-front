@@ -2,20 +2,252 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global color schema - Matching Desktop App Theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core colors from the Savvy-like design */
+  --background: #13091f;
+  --card-purple: #2a1659;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  
+  /* Gradient colors */
+  --gradient-start: #57346b;
+  --gradient-mid: #7c3aed;
+  --gradient-end: #f68f56;
+  
+  /* Button colors */
+  --button-primary: #7c3aed;
+  --button-secondary: rgba(255, 255, 255, 0.1);
+  --button-hover: #8b5cf6;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--text-primary)] antialiased;
+    font-family: var(--font-inter);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-jakarta);
+    @apply font-semibold tracking-tight;
+  }
+
+  /* Monospace text if needed */
+  .font-mono {
+    font-family: var(--font-jetbrains);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .gradient-text {
+    background: linear-gradient(
+      to right,
+      var(--gradient-start),
+      var(--gradient-mid),
+      var(--gradient-end)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    color: var(--gradient-end);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    display: inline-block;
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-jakarta);
+    font-weight: bold;
+  }
+
+  .gradient-text:hover {
+    background: linear-gradient(
+      to right,
+      var(--gradient-end),
+      var(--gradient-mid),
+      var(--gradient-start)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .floating-card {
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(10deg) rotateY(-10deg);
+    transition: transform 0.3s ease;
+  }
+
+  .floating-card:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+
+  .gradient-wave {
+    background: linear-gradient(
+      90deg,
+      var(--gradient-start),
+      var(--gradient-mid),
+      var(--gradient-end)
+    );
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[var(--background)];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[var(--card-purple)] rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-[var(--gradient-mid)];
+}
+
+/* Add to your existing CSS */
+.prose {
+  @apply text-white/90;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  @apply text-white font-bold;
+}
+
+.prose h1 {
+  @apply text-4xl mb-8;
+}
+
+.prose h2 {
+  @apply text-2xl mt-12 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl mt-8 mb-3;
+}
+
+.prose p {
+  @apply mb-4 leading-7;
+}
+
+.prose ul {
+  @apply my-6 list-disc pl-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-white/10 text-white/90;
+}
+
+.prose pre {
+  @apply p-4 rounded-lg bg-[var(--background-darker)] my-6 overflow-x-auto;
+}
+
+/* Add to your existing styles */
+.markdown-content {
+  @apply text-[var(--text-primary)];
+}
+
+.markdown-content h1 {
+  @apply text-4xl font-bold mb-8;
+}
+
+.markdown-content h2 {
+  @apply text-2xl font-bold mt-12 mb-6 pb-2 border-b border-white/10;
+}
+
+.markdown-content h3 {
+  @apply text-xl font-semibold mt-8 mb-4;
+}
+
+.markdown-content p {
+  @apply leading-7 mb-6;
+}
+
+.markdown-content ul {
+  @apply list-disc pl-6 mb-6 space-y-2;
+}
+
+.markdown-content ol {
+  @apply list-decimal pl-6 mb-6 space-y-2;
+}
+
+.markdown-content code {
+  @apply bg-[var(--background-darker)] px-2 py-1 rounded text-sm font-mono;
+}
+
+.markdown-content pre {
+  @apply bg-[var(--background-darker)] p-4 rounded-lg overflow-x-auto mb-6;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-white/20 pl-4 italic my-6;
+}
+
+.markdown-content table {
+  @apply w-full mb-6;
+}
+
+.markdown-content th {
+  @apply text-left p-2 bg-white/5 font-semibold;
+}
+
+.markdown-content td {
+  @apply p-2 border-t border-white/10;
+}
+
+.markdown-content a {
+  @apply text-blue-400 hover:text-blue-300 underline;
+}
+
+.floating-feature {
+  animation: float-feature 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+}
+
+@keyframes float-feature {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.floating-feature:nth-child(2) {
+  animation-delay: -2s;
+}
+
+/* Add this to change cursor for all clickable elements during download */
+body.downloading * {
+  cursor: wait !important;
+}
+
+body.downloading button:disabled {
+  cursor: wait !important;
 }
