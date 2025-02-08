@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -55,13 +56,16 @@ export async function getAllDocs(): Promise<DocType[]> {
         // Use gray-matter to parse the post metadata section
         const { data, content } = matter(fileContents);
         
+        // Await the result of marked(content) if it returns a Promise
+        const htmlContent = await marked(content);
+
         return {
           slug,
           title: data.title || slug,
           description: data.description || '',
           lastUpdated: data.lastUpdated || new Date().toISOString(),
           content,
-          htmlContent: marked(content)
+          htmlContent
         };
       })
   );
@@ -76,12 +80,15 @@ export async function getDocBySlug(slug: string): Promise<DocType> {
   // Use gray-matter to parse the post metadata section
   const { data, content } = matter(fileContents);
   
+  // Await the result of marked(content) if it returns a Promise
+  const htmlContent = await marked(content);
+
   return {
     slug,
     title: data.title || slug,
     description: data.description || '',
     lastUpdated: data.lastUpdated || new Date().toISOString(),
     content,
-    htmlContent: marked(content)
+    htmlContent
   };
 } 

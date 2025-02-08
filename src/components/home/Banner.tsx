@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { Button } from "../ui/Button";
@@ -8,7 +9,7 @@ import { DownloadButton } from "../download/DownloadButton";
 import { cn } from "@/lib/utils";
 
 export default function Banner() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
   const { mutate: downloadApp, isPending } = useAppDownload();
 
   return (
