@@ -1,6 +1,8 @@
+'use client';
 import React from 'react';
 import { Alert } from '@/components/ui/Alert';
 import { DocCard } from '@/components/docs/DocCard';
+
 
 const gettingStartedDocs = [
   {

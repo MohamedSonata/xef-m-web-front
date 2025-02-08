@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { Alert } from '@/components/ui/Alert';
