@@ -27,9 +27,12 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/src/content ./src/content
 
 # Expose the port the app runs on
 EXPOSE 3000
 
 # Start the app
-CMD ["npm", "start"] 
+CMD ["npm", "start"]
+
+ENV NEXT_STATIC_GENERATION_TIMEOUT=300 

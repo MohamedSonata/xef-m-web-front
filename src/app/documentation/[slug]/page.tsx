@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
 import { getDocBySlug, getAllDocs } from '@/lib/docs';
 import { notFound } from 'next/navigation';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DocNavigation } from '@/components/docs/DocNavigation';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { MDXRemote } from 'next-mdx-remote/rsc';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -34,13 +37,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 export default async function DocumentationPage(props: PageProps) {
   try {
     const { slug } = await props.params;
-    await props.searchParams; // Await searchParams to satisfy type constraint
+    await props.searchParams;
     const doc = await getDocBySlug(slug);
-    const allDocs = await getAllDocs();
-
-    const currentIndex = allDocs.findIndex((d) => d.slug === slug);
-    const prevDoc = currentIndex > 0 ? allDocs[currentIndex - 1] : undefined;
-    const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : undefined;
 
     return (
       <article className="max-w-4xl mx-auto pt-16 px-4">
@@ -53,31 +51,13 @@ export default async function DocumentationPage(props: PageProps) {
             </div>
           </header>
 
-          <div
-            className="markdown-content space-y-6"
-            dangerouslySetInnerHTML={{ __html: doc.htmlContent }}
-          />
-
-          <DocNavigation
-            prev={
-              prevDoc
-                ? {
-                    title: prevDoc.title,
-                    description: prevDoc.description,
-                    href: `/documentation/${prevDoc.slug}`,
-                  }
-                : undefined
-            }
-            next={
-              nextDoc
-                ? {
-                    title: nextDoc.title,
-                    description: nextDoc.description,
-                    href: `/documentation/${nextDoc.slug}`,
-                  }
-                : undefined
-            }
-          />
+          <div className="markdown-content space-y-6">
+            {doc.component ? (
+              <doc.component />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: doc.htmlContent }} />
+            )}
+          </div>
         </div>
       </article>
     );

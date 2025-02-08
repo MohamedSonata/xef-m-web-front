@@ -74,16 +74,7 @@ export default function Banner() {
                       src={IMAGES.appShowCaseMP4} 
                       type="video/mp4"
                     />
-                    {/* Fallback for older browsers */}
-                    <Image
-                      src={IMAGES.appShowCaseGif}
-                      alt="Xefro Mirror Demo"
-                      width={1400}
-                      height={750}
-                      className="w-full h-auto"
-                      priority
-                      quality={100}
-                    />
+                  
                   </video>
                 </div>
 

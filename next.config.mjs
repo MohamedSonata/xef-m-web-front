@@ -1,58 +1,31 @@
-import nextra from 'nextra'
+import createMDX from '@next/mdx'
 
-import { fileURLToPath } from 'url'
+const withMDX = createMDX()
 
-
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-
-
-
-const withNextra = nextra({
-
-  theme: 'nextra-theme-docs',
-
-  themeConfig: './theme.config.tsx',
-
-  defaultShowCopyCode: true,
-
-  flexsearch: true,
-
-})
-
-
-
-export default withNextra({
-
-  experimental: {
-
-    optimizeCss: false,
-
-    // Explicitly opt out of Turbopack
-
-    turbo: {
-
-      enabled: false
-
-    }
-
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'standalone',
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  images: {
+    unoptimized: true,
   },
-
-  webpack: (config) => {
-
-    config.module.rules.push({
-
-      test: /\.(woff|woff2|eot|ttf|otf)$/i,
-
-      type: 'asset/resource',
-
-    });
-
-    return config;
-
+  env: {
+    DOCS_DIRECTORY: process.env.DOCS_DIRECTORY || 'src/content/docs',
+    CACHE_DURATION: process.env.CACHE_DURATION || '3600',
   },
+  async headers() {
+    return [
+      {
+        source: '/documentation/:slug*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+    ]
+  },
+}
 
-}); 
+export default withMDX(nextConfig) 
