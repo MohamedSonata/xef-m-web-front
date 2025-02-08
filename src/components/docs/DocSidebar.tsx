@@ -1,4 +1,4 @@
-import { docs } from '@/lib/docs';
+import { DOC_ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -7,30 +7,22 @@ const sections = [
   {
     title: 'Getting Started',
     items: [
-      { slug: 'getting-started', title: 'Introduction' },
-      { slug: 'screen-mirroring', title: 'Screen Mirroring' },
-      { slug: 'file-transfer', title: 'File Transfer' },
+      { slug: 'getting-started', title: DOC_ROUTES['getting-started'].label },
+      { slug: 'screen-mirroring', title: DOC_ROUTES['screen-mirroring'].label },
+      { slug: 'file-transfer', title: DOC_ROUTES['file-transfer'].label },
+      { slug: 'device-control', title: DOC_ROUTES['device-control'].label },
     ]
   },
   {
     title: 'Documentation',
     items: [
-      { slug: 'features', title: 'Features' },
-      { slug: 'guides', title: 'Guides' },
-      { slug: 'troubleshooting', title: 'Troubleshooting' },
+      { slug: 'features', title: DOC_ROUTES['features'].label },
+      { slug: 'guides', title: DOC_ROUTES['guides'].label },
+      { slug: 'troubleshooting', title: DOC_ROUTES['troubleshooting'].label },
+      { slug: 'performance', title: DOC_ROUTES['performance'].label },
     ]
   }
-];
-
-// Validate that all routes in sections exist in docs
-const validRoutes = Object.keys(docs);
-sections.forEach(section => {
-  section.items.forEach(item => {
-    if (!validRoutes.includes(item.slug)) {
-      console.warn(`Warning: Route '${item.slug}' in sidebar does not exist in docs`);
-    }
-  });
-});
+] as const;
 
 export function DocSidebar() {
   const pathname = usePathname();
@@ -48,7 +40,7 @@ export function DocSidebar() {
               {section.items.map((item) => (
                 <Link
                   key={item.slug}
-                  href={`/documentation/${item.slug}`}
+                  href={DOC_ROUTES[item.slug].path}
                   className={cn(
                     'rounded px-3 py-1.5 text-[0.9375rem] transition-colors',
                     currentSlug === item.slug

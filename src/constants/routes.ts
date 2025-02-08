@@ -55,3 +55,48 @@ export const NAV_ITEMS: Route[] = [
     description: "Help and Support",
   },
 ] as const; 
+
+export const DOC_ROUTES = {
+  'getting-started': {
+    path: '/documentation/getting-started',
+    label: 'Getting Started',
+    description: 'Learn how to get started with Xefro Mirror'
+  },
+  'screen-mirroring': {
+    path: '/documentation/screen-mirroring',
+    label: 'Screen Mirroring',
+    description: 'Learn how to mirror your device screen'
+  },
+  'file-transfer': {
+    path: '/documentation/file-transfer',
+    label: 'File Transfer',
+    description: 'Learn how to transfer files between devices'
+  },
+  'device-control': {
+    path: '/documentation/device-control',
+    label: 'Device Control',
+    description: 'Learn how to control your devices remotely'
+  },
+  'features': {
+    path: '/documentation/features',
+    label: 'Features',
+    description: 'Explore Xefro Mirror features'
+  },
+  'guides': {
+    path: '/documentation/guides',
+    label: 'Guides',
+    description: 'Detailed guides for Xefro Mirror'
+  },
+  'troubleshooting': {
+    path: '/documentation/troubleshooting',
+    label: 'Troubleshooting',
+    description: 'Common issues and their solutions'
+  },
+  'performance': {
+    path: '/documentation/performance',
+    label: 'Performance',
+    description: 'Optimize your Xefro Mirror performance'
+  }
+} as const;
+
+export type DocRoute = keyof typeof DOC_ROUTES; 
