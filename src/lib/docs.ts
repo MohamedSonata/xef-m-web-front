@@ -1,43 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import fs from 'fs';
-import path from 'path';
 
-
-
+import { ComponentType } from 'react';
 import ScreenMirroringDoc from '@/components/docs/content/ScreenMirroring';
 import GettingStartedDoc from '@/components/docs/content/GettingStarted';
 import FeaturesDoc from '@/components/docs/content/FeaturesDoc';
 import GuidesDoc from '@/components/docs/content/GuidesDoc';
 import TroubleshootingDoc from '@/components/docs/content/TroubleshootingDoc';
 import PlaceholderDoc from '@/components/docs/content/PlaceholderDoc';
-import { ComponentType } from 'react';
-
-// Define base directory for docs
-const baseDir = process.cwd();
-const docsDirectory = path.join(baseDir, 'src/content/docs');
-
-// Add validation for docs directory
-function ensureDocsDirectory() {
-  if (!fs.existsSync(docsDirectory)) {
-    fs.mkdirSync(docsDirectory, { recursive: true });
-  }
-}
-
-// Initialize docs directory
-ensureDocsDirectory();
-
-// Define valid slugs
-const VALID_SLUGS = [
-  'getting-started',
-  'screen-mirroring',
-  'features',
-  'guides',
-  'troubleshooting',
-  'quick-start',
-  'installation',
-  'configuration',
-  'faq'
-];
 
 export interface DocType {
   slug: string;
@@ -85,17 +53,10 @@ export const docs: Record<string, DocType> = {
   }
 };
 
-const docsCache = new Map();
-
-// Add error logging
-function logError(error: unknown, context: string) {
-  console.error(`[${process.env.NODE_ENV}] Error in ${context}:`, error);
-  // You could add production-specific error handling here
-}
-
 export const getDocBySlug = async (slug: string): Promise<DocType> => {
   const doc = docs[slug];
   if (!doc) {
+    console.warn(`[${process.env.NODE_ENV}] Doc not found for slug: ${slug}, using placeholder`);
     return {
       slug,
       title: slug.charAt(0).toUpperCase() + slug.slice(1),
