@@ -2,7 +2,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FolderOpen, Copy, Trash2, Edit3, ExternalLink } from 'lucide-react';
 
 const fileFeatures = [

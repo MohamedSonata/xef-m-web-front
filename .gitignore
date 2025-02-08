@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Keep example file
 !.env.example
+
+# Documentation
+src/content/docs/*.md

@@ -1,45 +1,87 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
-import { marked } from 'marked';
-import { DocSection } from './docs/types';
-import { cache } from 'react';
+
+
+
 import ScreenMirroringDoc from '@/components/docs/content/ScreenMirroring';
 import GettingStartedDoc from '@/components/docs/content/GettingStarted';
+import FeaturesDoc from '@/components/docs/content/FeaturesDoc';
+import GuidesDoc from '@/components/docs/content/GuidesDoc';
+import TroubleshootingDoc from '@/components/docs/content/TroubleshootingDoc';
+import PlaceholderDoc from '@/components/docs/content/PlaceholderDoc';
+import { ComponentType } from 'react';
 
-const docsDirectory = path.join(process.cwd(), process.env.DOCS_DIRECTORY || 'src/content/docs');
+// Define base directory for docs
+const baseDir = process.cwd();
+const docsDirectory = path.join(baseDir, 'src/content/docs');
+
+// Add validation for docs directory
+function ensureDocsDirectory() {
+  if (!fs.existsSync(docsDirectory)) {
+    fs.mkdirSync(docsDirectory, { recursive: true });
+  }
+}
+
+// Initialize docs directory
+ensureDocsDirectory();
+
+// Define valid slugs
+const VALID_SLUGS = [
+  'getting-started',
+  'screen-mirroring',
+  'features',
+  'guides',
+  'troubleshooting',
+  'quick-start',
+  'installation',
+  'configuration',
+  'faq'
+];
 
 export interface DocType {
   slug: string;
   title: string;
   description: string;
   lastUpdated: string;
-  content: string;
-  htmlContent: string;
-  component?: React.ComponentType;
+  component: ComponentType;
 }
 
-export const docs: Record<string, DocSection> = {
+export const docs: Record<string, DocType> = {
   'getting-started': {
+    slug: 'getting-started',
     title: 'Getting Started',
     description: 'Learn how to get started with Xefro Mirror',
-    component: GettingStartedDoc,
-    metadata: {
-      lastUpdated: '2024-03-20',
-      author: 'Team Xefro',
-      tags: ['basics']
-    }
+    lastUpdated: '2024-03-20',
+    component: GettingStartedDoc
   },
   'screen-mirroring': {
+    slug: 'screen-mirroring',
     title: 'Screen Mirroring',
     description: 'Learn how to mirror your device screen',
-    component: ScreenMirroringDoc,
-    metadata: {
-      lastUpdated: '2024-03-20',
-      author: 'Team Xefro',
-      tags: ['features', 'mirroring']
-    }
+    lastUpdated: '2024-03-20',
+    component: ScreenMirroringDoc
+  },
+  'features': {
+    slug: 'features',
+    title: 'Features',
+    description: 'Explore Xefro Mirror features',
+    lastUpdated: '2024-03-20',
+    component: FeaturesDoc
+  },
+  'guides': {
+    slug: 'guides',
+    title: 'Guides',
+    description: 'Detailed guides for Xefro Mirror',
+    lastUpdated: '2024-03-20',
+    component: GuidesDoc
+  },
+  'troubleshooting': {
+    slug: 'troubleshooting',
+    title: 'Troubleshooting',
+    description: 'Common issues and their solutions',
+    lastUpdated: '2024-03-20',
+    component: TroubleshootingDoc
   }
 };
 
@@ -51,110 +93,22 @@ function logError(error: unknown, context: string) {
   // You could add production-specific error handling here
 }
 
-export const getDocBySlug = cache(async (slug: string): Promise<DocType> => {
-  try {
-    if (docsCache.has(slug)) {
-      return docsCache.get(slug);
-    }
-
-    let doc: DocType;
-    const staticDoc = docs[slug];
-    const mdPath = path.join(docsDirectory, `${slug}.md`);
-
-    // Try to get markdown content if it exists
-    let markdownContent = '';
-    let markdownHtml = '';
-    if (fs.existsSync(mdPath)) {
-      const fileContents = await fs.promises.readFile(mdPath, 'utf8');
-      const { content } = matter(fileContents);
-      markdownContent = content;
-      markdownHtml = await marked(content);
-    }
-
-    if (staticDoc) {
-      // Combine static doc with markdown content if available
-      doc = {
-        slug,
-        title: staticDoc.title,
-        description: staticDoc.description,
-        lastUpdated: staticDoc.metadata.lastUpdated,
-        content: markdownContent || '',
-        htmlContent: markdownHtml || '',
-        component: staticDoc.component
-      };
-    } else if (markdownContent) {
-      // Markdown-only doc
-      const { data } = matter(await fs.promises.readFile(mdPath, 'utf8'));
-      doc = {
-        slug,
-        title: data.title || slug,
-        description: data.description || '',
-        lastUpdated: data.lastUpdated || new Date().toISOString(),
-        content: markdownContent,
-        htmlContent: markdownHtml
-      };
-    } else {
-      throw new Error(`Doc not found for slug: ${slug}`);
-    }
-
-    docsCache.set(slug, doc);
-    return doc;
-  } catch (error) {
-    logError(error, `getDocBySlug(${slug})`);
-    throw error;
+export const getDocBySlug = async (slug: string): Promise<DocType> => {
+  const doc = docs[slug];
+  if (!doc) {
+    return {
+      slug,
+      title: slug.charAt(0).toUpperCase() + slug.slice(1),
+      description: 'Documentation coming soon',
+      lastUpdated: new Date().toISOString(),
+      component: PlaceholderDoc
+    };
   }
-});
+  return doc;
+};
 
 export async function getAllDocs(): Promise<DocType[]> {
-  try {
-    const docsMap = new Map<string, DocType>();
-
-    // Process all markdown files
-    if (fs.existsSync(docsDirectory)) {
-      const mdFiles = await fs.promises.readdir(docsDirectory);
-      await Promise.all(
-        mdFiles
-          .filter(fileName => fileName.endsWith('.md'))
-          .map(async fileName => {
-            const slug = fileName.replace(/\.md$/, '');
-            try {
-              const doc = await getDocBySlug(slug);
-              docsMap.set(slug, doc);
-            } catch (error) {
-              console.error(`Error processing markdown file ${fileName}:`, error);
-            }
-          })
-      );
-    }
-
-    // Add or update static docs
-    for (const [slug, staticDoc] of Object.entries(docs)) {
-      const existingDoc = docsMap.get(slug);
-      docsMap.set(slug, {
-        ...existingDoc,
-        slug,
-        title: staticDoc.title,
-        description: staticDoc.description,
-        lastUpdated: staticDoc.metadata.lastUpdated,
-        component: staticDoc.component,
-        content: existingDoc?.content || '',
-        htmlContent: existingDoc?.htmlContent || ''
-      });
-    }
-
-    return Array.from(docsMap.values());
-  } catch (error) {
-    console.error('Error getting all docs:', error);
-    return Object.entries(docs).map(([slug, doc]) => ({
-      slug,
-      title: doc.title,
-      description: doc.description,
-      lastUpdated: doc.metadata.lastUpdated,
-      content: '',
-      htmlContent: '',
-      component: doc.component
-    }));
-  }
+  return Object.values(docs);
 }
 
 // const docsCache = new Map();

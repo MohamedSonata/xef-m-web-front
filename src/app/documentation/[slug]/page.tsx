@@ -40,6 +40,8 @@ export default async function DocumentationPage(props: PageProps) {
     await props.searchParams;
     const doc = await getDocBySlug(slug);
 
+    const DocComponent = doc.component;
+    
     return (
       <article className="max-w-4xl mx-auto pt-16 px-4">
         <div className="space-y-8">
@@ -52,17 +54,12 @@ export default async function DocumentationPage(props: PageProps) {
           </header>
 
           <div className="markdown-content space-y-6">
-            {doc.component ? (
-              <doc.component />
-            ) : (
-              <div dangerouslySetInnerHTML={{ __html: doc.htmlContent }} />
-            )}
+            <DocComponent />
           </div>
         </div>
       </article>
     );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     notFound();
   }
 }

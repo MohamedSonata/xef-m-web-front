@@ -22,12 +22,17 @@ FROM node:18-alpine AS runner
 # Set the working directory
 WORKDIR /app
 
+# Create content directory
+# RUN mkdir -p src/content/docs/
+
+# Copy content directory from builder
+
+
 # Copy only necessary files from the builder stage
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/src/content ./src/content
 
 # Expose the port the app runs on
 EXPOSE 3000
