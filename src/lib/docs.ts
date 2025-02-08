@@ -1,10 +1,10 @@
-
 import { ComponentType } from 'react';
 import ScreenMirroringDoc from '@/components/docs/content/ScreenMirroring';
 import GettingStartedDoc from '@/components/docs/content/GettingStarted';
 import FeaturesDoc from '@/components/docs/content/FeaturesDoc';
 import GuidesDoc from '@/components/docs/content/GuidesDoc';
 import TroubleshootingDoc from '@/components/docs/content/TroubleshootingDoc';
+import FileTransferDoc from '@/components/docs/content/FileTransferDoc';
 import PlaceholderDoc from '@/components/docs/content/PlaceholderDoc';
 
 export interface DocType {
@@ -50,6 +50,13 @@ export const docs: Record<string, DocType> = {
     description: 'Common issues and their solutions',
     lastUpdated: '2024-03-20',
     component: TroubleshootingDoc
+  },
+  'file-transfer': {
+    slug: 'file-transfer',
+    title: 'File Transfer',
+    description: 'Learn how to transfer files between devices',
+    lastUpdated: '2024-03-20',
+    component: FileTransferDoc
   }
 };
 
