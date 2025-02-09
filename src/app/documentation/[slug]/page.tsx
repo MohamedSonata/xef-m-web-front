@@ -9,8 +9,8 @@ import { DocNavigation } from '@/components/docs/DocNavigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 
 interface PageProps {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 // Generate static paths at build time
@@ -21,8 +21,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { slug } = await props.params;
   
   if (!DOC_ROUTES[slug as DocRoute]) {
     return {
@@ -38,8 +38,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function DocumentationPage({ params }: PageProps) {
-  const { slug } = await params;
+export default async function DocumentationPage(props: PageProps) {
+  const { slug } = await props.params;
+  await props.searchParams;
   
   if (!DOC_ROUTES[slug as DocRoute]) {
     notFound();
