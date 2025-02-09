@@ -1,16 +1,12 @@
-import createMDX from '@next/mdx'
-
-const withMDX = createMDX()
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   images: {
     unoptimized: true,
   },
+  generateStaticParams: true,
   env: {
-    DOCS_DIRECTORY: process.env.DOCS_DIRECTORY || 'src/content/docs',
     CACHE_DURATION: process.env.CACHE_DURATION || '3600',
   },
   async headers() {
@@ -28,4 +24,4 @@ const nextConfig = {
   },
 }
 
-export default withMDX(nextConfig) 
+export default nextConfig 

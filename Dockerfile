@@ -1,43 +1,38 @@
-# Use the official Node.js image as the base image for building
-FROM node:18-alpine AS builder
+# Use a lightweight Node.js image
+FROM node:18-alpine AS base
 
-# Set the working directory
+# Install dependencies only when needed
+FROM base AS deps
 WORKDIR /app
+COPY package.json package-lock.json ./
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . .
+# Ensure dependencies are installed correctly
+RUN npm ci --omit=dev
 
 # Build the Next.js app
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
 RUN npm run build
 
-# Use a smaller image for production
-FROM node:18-alpine AS runner
-
-# Set the working directory
+# Use a smaller production image
+FROM base AS runner
 WORKDIR /app
 
-# Create content directory
-# RUN mkdir -p src/content/docs/
+# Set environment variables for production
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-# Copy content directory from builder
-
-
-# Copy only necessary files from the builder stage
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.next ./.next
+# Copy only necessary files
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
-# Expose the port the app runs on
+# Expose the port
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "start"]
-
-ENV NEXT_STATIC_GENERATION_TIMEOUT=300 
+# Run the Next.js standalone server
+CMD ["node", "server.js"]

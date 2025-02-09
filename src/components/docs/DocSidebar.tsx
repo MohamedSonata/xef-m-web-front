@@ -1,3 +1,4 @@
+'use client';
 import { DOC_ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
