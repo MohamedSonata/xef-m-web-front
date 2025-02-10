@@ -1,5 +1,5 @@
-export default function Loading() {
-  return  (
+export default function LoadingSimulator() {
+  return (
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {[...Array(6)].map((_, i) => (
         <div
