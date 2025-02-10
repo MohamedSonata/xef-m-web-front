@@ -23,7 +23,7 @@ services:
       - target: 3000
         published: 3000
         protocol: tcp
-        mode: host
+        mode: ingress
     networks:
       - webnet
     logging:
