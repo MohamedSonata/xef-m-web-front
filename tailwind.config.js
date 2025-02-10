@@ -12,6 +12,11 @@ module.exports = {
         heading: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-jetbrains)', 'monospace'],
       },
+      keyframes: {
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' }
+        }
+      }
     },
     // colors: {
 

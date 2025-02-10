@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  generateStaticParams: true,
+  // generateStaticParams: true,
   env: {
     CACHE_DURATION: process.env.CACHE_DURATION || '3600',
   },

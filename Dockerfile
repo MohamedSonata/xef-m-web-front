@@ -20,7 +20,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Next.js collects anonymous telemetry data - disable it
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Build Next.js
 RUN npm run build
@@ -35,10 +35,10 @@ RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
 # Environment variables
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED 1
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+ENV NODE_ENV=production`
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 # Copy necessary files
 COPY --from=builder /app/public ./public

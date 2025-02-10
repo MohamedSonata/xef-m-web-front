@@ -10,15 +10,15 @@ const sections = [
     items: [
       { slug: 'getting-started', title: DOC_ROUTES['getting-started'].label },
       { slug: 'screen-mirroring', title: DOC_ROUTES['screen-mirroring'].label },
-      { slug: 'file-transfer', title: DOC_ROUTES['file-transfer'].label },
+      { slug: 'file-manager', title: DOC_ROUTES['file-manager'].label },
       { slug: 'device-control', title: DOC_ROUTES['device-control'].label },
     ]
   },
   {
     title: 'Documentation',
     items: [
-      { slug: 'features', title: DOC_ROUTES['features'].label },
-      { slug: 'guides', title: DOC_ROUTES['guides'].label },
+      // { slug: 'features', title: DOC_ROUTES['features'].label },
+      // { slug: 'guides', title: DOC_ROUTES['guides'].label },
       { slug: 'troubleshooting', title: DOC_ROUTES['troubleshooting'].label },
       { slug: 'performance', title: DOC_ROUTES['performance'].label },
     ]

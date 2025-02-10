@@ -46,7 +46,7 @@ export const NAV_ITEMS: Route[] = [
       { label: 'Getting Started', path: '/documentation/getting-started' },
       { label: 'Screen Mirroring', path: '/documentation/screen-mirroring' },
       { label: 'Device Control', path: '/documentation/device-control' },
-      { label: 'File Transfer', path: '/documentation/file-transfer' },
+      { label: 'File Manager', path: '/documentation/file-manager' },
     ]
   },
   { 
@@ -67,36 +67,38 @@ export const DOC_ROUTES = {
     label: 'Screen Mirroring',
     description: 'Learn how to mirror your device screen'
   },
-  'file-transfer': {
-    path: '/documentation/file-transfer',
-    label: 'File Transfer',
-    description: 'Learn how to transfer files between devices'
-  },
   'device-control': {
     path: '/documentation/device-control',
     label: 'Device Control',
     description: 'Learn how to control your devices remotely'
   },
-  'features': {
-    path: '/documentation/features',
-    label: 'Features',
-    description: 'Explore Xefro Mirror features'
+  'file-manager': {
+    path: '/documentation/file-manager',
+    label: 'File Manager',
+    description: 'Learn how to manage files between devices'
   },
-  'guides': {
-    path: '/documentation/guides',
-    label: 'Guides',
-    description: 'Detailed guides for Xefro Mirror'
+  
+  // 'features': {
+  //   path: '/documentation/features',
+  //   label: 'Features',
+  //   description: 'Explore Xefro Mirror features'
+  // },
+  // 'guides': {
+  //   path: '/documentation/guides',
+  //   label: 'Guides',
+  //   description: 'Detailed guides for Xefro Mirror'
+  // },
+  'performance': {
+    path: '/documentation/performance',
+    label: 'Performance',
+    description: 'Optimize your Xefro Mirror performance'
   },
   'troubleshooting': {
     path: '/documentation/troubleshooting',
     label: 'Troubleshooting',
     description: 'Common issues and their solutions'
   },
-  'performance': {
-    path: '/documentation/performance',
-    label: 'Performance',
-    description: 'Optimize your Xefro Mirror performance'
-  }
+ 
 } as const;
 
 export type DocRoute = keyof typeof DOC_ROUTES; 

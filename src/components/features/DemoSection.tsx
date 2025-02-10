@@ -71,7 +71,7 @@ export function DemoSection() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
             <Image
-              src={IMAGES.mockupPhone}
+              src={IMAGES.xefroMirrorVideoThumb}
               alt="Feature Preview"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"

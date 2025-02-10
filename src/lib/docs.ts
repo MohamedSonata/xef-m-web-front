@@ -2,10 +2,10 @@ import { ComponentType } from 'react';
 import { DOC_ROUTES, type DocRoute } from '@/constants/routes';
 import ScreenMirroringDoc from '@/components/docs/content/ScreenMirroring';
 import GettingStartedDoc from '@/components/docs/content/GettingStarted';
-import FeaturesDoc from '@/components/docs/content/FeaturesDoc';
-import GuidesDoc from '@/components/docs/content/GuidesDoc';
+// import FeaturesDoc from '@/components/docs/content/FeaturesDoc';
+// import GuidesDoc from '@/components/docs/content/GuidesDoc';
 import TroubleshootingDoc from '@/components/docs/content/TroubleshootingDoc';
-import FileTransferDoc from '@/components/docs/content/FileTransferDoc';
+import FileTransferDoc from '@/components/docs/content/FileManagerDoc';
 import DeviceControlDoc from '@/components/docs/content/DeviceControlDoc';
 import PerformanceDoc from '@/components/docs/content/PerformanceDoc';
 import PlaceholderDoc from '@/components/docs/content/PlaceholderDoc';
@@ -33,20 +33,20 @@ export const docs: Record<DocRoute, DocType> = {
     lastUpdated: '2024-03-20',
     component: ScreenMirroringDoc
   },
-  'features': {
-    slug: 'features',
-    title: 'Features',
-    description: 'Explore Xefro Mirror features',
-    lastUpdated: '2024-03-20',
-    component: FeaturesDoc
-  },
-  'guides': {
-    slug: 'guides',
-    title: 'Guides',
-    description: 'Detailed guides for Xefro Mirror',
-    lastUpdated: '2024-03-20',
-    component: GuidesDoc
-  },
+  // 'features': {
+  //   slug: 'features',
+  //   title: 'Features',
+  //   description: 'Explore Xefro Mirror features',
+  //   lastUpdated: '2024-03-20',
+  //   component: FeaturesDoc
+  // },
+  // 'guides': {
+  //   slug: 'guides',
+  //   title: 'Guides',
+  //   description: 'Detailed guides for Xefro Mirror',
+  //   lastUpdated: '2024-03-20',
+  //   component: GuidesDoc
+  // },
   'troubleshooting': {
     slug: 'troubleshooting',
     title: 'Troubleshooting',
@@ -54,9 +54,9 @@ export const docs: Record<DocRoute, DocType> = {
     lastUpdated: '2024-03-20',
     component: TroubleshootingDoc
   },
-  'file-transfer': {
-    slug: 'file-transfer',
-    title: 'File Transfer',
+  'file-manager': {
+    slug: 'file-manager',
+    title: 'File Manager',
     description: 'Learn how to transfer files between devices',
     lastUpdated: '2024-03-20',
     component: FileTransferDoc
