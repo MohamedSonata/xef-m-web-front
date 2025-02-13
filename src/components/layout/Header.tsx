@@ -130,10 +130,8 @@ export default function Header() {
 
 
 
-          <Link href={ROUTES.HOME} className="text-2xl font-bold gradient-text">
-
+          <Link href={ROUTES.HOME} className="text-2xl font-bold gradient-text font-audiowide uppercase tracking-wider">
             Xefro Mirror
-
           </Link>
 
           
