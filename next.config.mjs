@@ -8,6 +8,7 @@ const nextConfig = {
   // generateStaticParams: true,
   env: {
     CACHE_DURATION: process.env.CACHE_DURATION || '3600',
+    GEMINI_API_KEY: process.env.GEMINI_API_KEY,
   },
   async headers() {
     return [
