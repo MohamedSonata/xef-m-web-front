@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || '');
 
 interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
@@ -13,10 +13,10 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
     const userMessage = messages[messages.length - 1].content;
-    console.log(process.env.GEMINI_API_KEY);
+    console.log(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
     console.log(process.env.NEXT_PUBLIC_API_URL);
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
       throw new Error('Missing Gemini API key');
     }
 
