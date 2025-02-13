@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   app:
+    env_file: ./.env.production
     image: mosonata/xef-m-web-front-img1:latest
     deploy:
       replicas: 3
@@ -16,9 +17,12 @@ services:
         window: 120s
 
     environment:
-      - NODE_ENV=production
-      - NEXT_TELEMETRY_DISABLED=1
-      - HOSTNAME=0.0.0.0
+      - NODE_ENV=${NODE_ENV}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
+      - HOSTNAME=${HOSTNAME}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} 
+      - NEXT_PUBLIC_UPLOAD_URL=${NEXT_PUBLIC_UPLOAD_URL}
     ports:
       - target: 3000
         published: 3000

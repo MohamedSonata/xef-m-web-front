@@ -13,6 +13,8 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
     const userMessage = messages[messages.length - 1].content;
+    console.log(process.env.GEMINI_API_KEY);
+    console.log(process.env.NEXT_PUBLIC_API_URL);
 
     if (!process.env.GEMINI_API_KEY) {
       throw new Error('Missing Gemini API key');

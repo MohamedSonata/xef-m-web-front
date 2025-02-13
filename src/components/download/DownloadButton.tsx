@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { Button } from "../ui/Button";
 import { AppService } from "@/services/AppService";
 import { useState, useRef } from "react";
 import toast from 'react-hot-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Settings } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 export function DownloadButton() {
@@ -12,7 +13,19 @@ export function DownloadButton() {
   const [hasError, setHasError] = useState(false);
   const isProcessing = useRef(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
+// Add this SVG component at the top of your file
+const WindowsLogo = () => (
+  <svg 
+    className="w-4 h-4 mr-2" 
+    viewBox="0 0 88 88" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path 
+      fill="currentColor" 
+      d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"
+    />
+  </svg>
+);
   const handleClick = async () => {
     // Prevent multiple clicks
     if (isProcessing.current) return;
@@ -97,6 +110,7 @@ export function DownloadButton() {
         "transition-all duration-200"
       )}
     >
+        
       {isLoading ? (
         <>
           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -105,7 +119,10 @@ export function DownloadButton() {
       ) : hasError ? (
         "Try Again"
       ) : (
-        "Download Now"
+        <>
+          <WindowsLogo /> {/* Add Windows icon */}
+          Download Now
+        </>
       )}
     </Button>
   );
