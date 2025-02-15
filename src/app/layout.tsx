@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./fonts.css";
 import { Providers } from './providers';
 import FloatingChatButton from '@/components/chat/FloatingChatButton';
 

@@ -7,11 +7,11 @@ import { IMAGES } from '@/constants/assets';
 import { useAppDownload } from '@/hooks/useAppDownload';
 import { DownloadButton } from "../download/DownloadButton";
 import { cn } from "@/lib/utils";
+import React from 'react';
 
 export default function Banner() {
- 
   const { mutate: downloadApp, isPending } = useAppDownload();
-
+  
   return (
     <section className="pt-32 pb-20 overflow-hidden">
       {/* Changed to flex container with padding */}
@@ -63,18 +63,18 @@ export default function Banner() {
                 {/* App Demo Video */}
                 <div className="relative rounded-xl overflow-hidden bg-[var(--background-darker)]">
                   <video
-                    autoPlay
-                    loop
+                     autoPlay
+                    // loop
                     muted
                     playsInline
+                    disablePictureInPicture
+                    disableRemotePlayback
                     className="w-full h-auto"
-                    // poster={IMAGES.appShowCasePoster} // Optional: Add a poster image
                   >
                     <source 
                       src={IMAGES.appShowCaseMP4} 
                       type="video/mp4"
                     />
-                  
                   </video>
                 </div>
 

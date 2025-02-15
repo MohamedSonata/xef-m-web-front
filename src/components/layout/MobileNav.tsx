@@ -127,7 +127,7 @@ export function MobileNav() {
                   />
 
                 </Link>
-                <Link href={ROUTES.HOME} className="text-2xl font-bold ">
+                <Link href={ROUTES.HOME} className="text-2xl font-bold font-audiowide uppercase ">
 
                   Xefro Mirror
 
