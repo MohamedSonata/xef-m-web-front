@@ -42,19 +42,18 @@ export default function ChatPage() {
   // Auto scroll when new messages arrive
   useEffect(() => {
     if (messagesContainerRef.current) {
-      scrollToBottom();
+      const container = messagesContainerRef.current;
+      const isNearBottom = 
+        container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+      
+      if (isNearBottom) {
+        scrollToBottom();
+      }
     }
   }, [messages]);
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
-
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] bg-gray-50 relative">
+    <div className="flex flex-col h-[calc(100vh-4rem)] bg-gray-50 overflow-hidden">
       {/* Header */}
       <div className="flex-none p-4 border-b border-gray-200 bg-white">
         <h1 className="text-2xl font-bold text-gray-900">
@@ -65,7 +64,7 @@ export default function ChatPage() {
       {/* Messages Container */}
       <div 
         ref={messagesContainerRef}
-        className="flex-1 overflow-y-auto p-4 space-y-4 messages-container"
+        className="flex-1 overflow-y-auto p-4 space-y-4 messages-container chat-container"
         onScroll={handleScroll}
       >
         {messages.map((message, index) => (
@@ -110,18 +109,17 @@ export default function ChatPage() {
         )}
       </div>
 
-      {/* Scroll to bottom button - Centered above input form */}
+      {/* Scroll button - Updated positioning */}
       {showScrollButton && (
         <button
           onClick={scrollToBottom}
-          className="fixed bottom-24 left-1/2 transform -translate-x-1/2 
-            bg-blue-600 hover:bg-blue-700 
+          className="absolute bottom-24 left-1/2 transform -translate-x-1/2 
+            bg-black hover:bg-blue-700 
             text-white rounded-full px-4 py-2 shadow-lg transition-all duration-200 
             hover:scale-105 z-[100] flex items-center justify-center
             gap-2"
           aria-label="Scroll to bottom"
         >
-          
           <svg 
             className="w-4 h-4" 
             fill="none" 
