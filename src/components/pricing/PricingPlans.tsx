@@ -9,7 +9,7 @@ export function PricingPlans() {
     {
       name: "Free",
       price: "$0",
-      description: "Perfect for trying out Xefro Mirror",
+      description: `Perfect for trying out Xefro Mirror \n Valid for 1 device \n 14 days free trial`,
       features: [
         "Basic screen mirroring",
         "Single device connection",
@@ -19,28 +19,29 @@ export function PricingPlans() {
     },
     {
       name: "Pro",
-      price: "$9.99",
+      price: "$1.99",
       description: "For power users who need more",
       features: [
         "HD screen mirroring",
         "Multiple device connections",
+        "Wireless screen mirroring",
         "Advanced monitoring tools",
         "Priority support",
         "No ads"
       ]
     },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      description: "For organizations with specific needs",
-      features: [
-        "Everything in Pro",
-        "Custom integration",
-        "Dedicated support",
-        "SLA guarantee",
-        "Team management"
-      ]
-    }
+    // {
+    //   name: "Enterprise",
+    //   price: "Custom",
+    //   description: "For organizations with specific needs",
+    //   features: [
+    //     "Everything in Pro",
+    //     "Custom integration",
+    //     "Dedicated support",
+    //     "SLA guarantee",
+    //     "Team management"
+    //   ]
+    // }
   ];
   // const handleGetStarted = async () => {
   //   console.log('Checking app installation...');
@@ -48,9 +49,9 @@ export function PricingPlans() {
   // };
 
   return (
-    <section className="w-full py-20">
+    <section className="w-full py-10">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 justify-items-center">
+        <div className="grid md:grid-cols-2 gap-8 justify-items-center">
           {plans.map((plan) => (
             <div 
               key={plan.name}

@@ -8,6 +8,23 @@ import { useAppDownload } from '@/hooks/useAppDownload';
 import { DownloadButton } from "../download/DownloadButton";
 import { cn } from "@/lib/utils";
 import React from 'react';
+import dynamic from 'next/dynamic';
+
+const BannerVideo = dynamic(() => import('./BannerVideo'), {
+  ssr: false,
+  loading: () => (
+    <div className="relative rounded-xl overflow-hidden bg-[var(--background-darker)]">
+      <Image
+        src={IMAGES.xefroMirrorVideoThumb}
+        alt="App Showcase"
+        className="w-full h-auto"
+        width={1100}
+        height={619}
+        priority
+      />
+    </div>
+  )
+});
 
 export default function Banner() {
   const { mutate: downloadApp, isPending } = useAppDownload();
@@ -60,23 +77,7 @@ export default function Banner() {
                 "transform hover:scale-102 transition-transform duration-500",
                 "lg:translate-y-6"
               )}>
-                {/* App Demo Video */}
-                <div className="relative rounded-xl overflow-hidden bg-[var(--background-darker)]">
-                  <video
-                     autoPlay
-                    // loop
-                    muted
-                    playsInline
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    className="w-full h-auto"
-                  >
-                    <source 
-                      src={IMAGES.appShowCaseMP4} 
-                      type="video/mp4"
-                    />
-                  </video>
-                </div>
+                <BannerVideo />
 
                 {/* Optional: Subtle shadow for depth */}
                 <div 

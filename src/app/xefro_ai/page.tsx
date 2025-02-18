@@ -53,9 +53,9 @@ export default function ChatPage() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] bg-gray-50 overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-4rem)] w-full bg-gray-50 overflow-hidden">
       {/* Header */}
-      <div className="flex-none p-4 border-b border-gray-200 bg-white">
+      <div className="flex-none p-4 border-b border-gray-200 bg-white w-full">
         <h1 className="text-2xl font-bold text-gray-900">
           Chat with Xefro AI Assistant
         </h1>
@@ -64,7 +64,7 @@ export default function ChatPage() {
       {/* Messages Container */}
       <div 
         ref={messagesContainerRef}
-        className="flex-1 overflow-y-auto p-4 space-y-4 messages-container chat-container"
+        className="flex-1 overflow-y-auto p-4 space-y-4 messages-container chat-container w-full max-w-none"
         onScroll={handleScroll}
       >
         {messages.map((message, index) => (
@@ -74,14 +74,16 @@ export default function ChatPage() {
             key={index}
             className={`p-4 rounded-xl shadow-sm ${
               message.role === 'user'
-                ? 'bg-[#1a1a1a] text-white ml-auto max-w-[80%]'
-                : 'bg-white text-gray-700 mr-auto max-w-[80%] border border-gray-100'
+                ? 'bg-[#1a1a1a] text-white max-w-[85%] ml-auto'
+                : 'bg-white text-gray-700 w-full border border-gray-100'
             }`}
           >
             {message.role === 'assistant' ? (
-              <MessageContent content={message.content} />
+              <div className="w-full">
+                <MessageContent content={message.content} />
+              </div>
             ) : (
-              <div className="whitespace-pre-wrap">{message.content}</div>
+              <div className="whitespace-pre-wrap w-full">{message.content}</div>
             )}
           </motion.div>
         ))}
@@ -137,20 +139,35 @@ export default function ChatPage() {
       )}
 
       {/* Input Form */}
-      <div className="flex-none p-4 border-t border-gray-200 bg-white">
+      <div className="flex-none p-4 border-t border-gray-200 bg-white w-full">
         <form onSubmit={handleSubmit} className="flex gap-2">
-          <input
-            type="text"
+          <textarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 p-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]"
-            placeholder="Type your message..."
+            onChange={(e) => {
+              setInput(e.target.value);
+              // Auto-adjust height
+              e.target.style.height = 'auto';
+              e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
+            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e as unknown as React.FormEvent<Element>);
+              }
+            }}
+            className="flex-1 p-3 border border-gray-200 rounded-xl bg-gray-50 
+              text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]
+              resize-none overflow-hidden min-h-[52px] max-h-[200px]"
+            placeholder="Type your message... (Press Shift + Enter for new line)"
             disabled={isLoading}
+            rows={1}
           />
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-[#1a1a1a] text-white px-6 py-3 rounded-xl hover:bg-[#2a2a2a] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            className="bg-[#1a1a1a] text-white px-6 py-3 rounded-xl 
+              hover:bg-[#2a2a2a] disabled:opacity-50 disabled:cursor-not-allowed 
+              transition-all duration-200 h-[52px]"
           >
             Send
           </button>
