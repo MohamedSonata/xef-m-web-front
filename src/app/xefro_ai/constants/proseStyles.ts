@@ -1,0 +1,34 @@
+export const PROSE_STYLES = `
+  prose max-w-none overflow-x-hidden
+  prose-headings:text-gray-900 
+  prose-p:text-gray-700 
+  prose-strong:text-gray-900 
+  prose-ul:text-gray-700 
+  prose-ol:text-gray-700 
+  prose-li:my-0 
+  prose-li:text-gray-700 
+  prose-pre:my-2 
+  prose-pre:bg-[#1a1a1a] 
+  prose-pre:rounded-lg 
+  prose-blockquote:border-l-4 
+  prose-blockquote:border-gray-300 
+  prose-blockquote:pl-4 
+  prose-blockquote:italic 
+  prose-blockquote:my-4 
+  prose-blockquote:text-gray-600 
+  [&>*]:text-gray-700
+  [&_p>code]:bg-blue-50
+  [&_p>code]:text-blue-700
+  [&_p>code]:font-semibold
+  [&_p>code]:px-1.5
+  [&_p>code]:py-0.5
+  [&_p>code]:rounded-md
+  [&_p>code]:whitespace-nowrap
+  [&_li>code]:bg-blue-50
+  [&_li>code]:text-blue-700
+  [&_li>code]:font-semibold
+  [&_li>code]:px-1.5
+  [&_li>code]:py-0.5
+  [&_li>code]:rounded-md
+  [&_li>code]:whitespace-nowrap
+`; 

@@ -11,41 +11,31 @@ interface ChatMessage {
 
 export async function POST(req: Request) {
   try {
+    if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
+      throw new Error('Missing Gemini API key');
+    }
+
     const { messages } = await req.json();
     
-    // Ensure we're not processing duplicate messages
-    const uniqueMessages = messages.reduce((acc: ChatMessage[], curr: ChatMessage) => {
-      const isDuplicate = acc.some(msg => 
-        msg.content === curr.content && 
-        msg.role === curr.role &&
-        // Only consider messages from the last 2 positions to avoid removing valid historical duplicates
-        acc.indexOf(msg) >= acc.length - 2
-      );
-      return isDuplicate ? acc : [...acc, curr];
-    }, []);
-    
-    // Get only the last user message
-    const lastUserMessage = uniqueMessages[uniqueMessages.length - 1].content;
-    
-    // Format previous messages for context (excluding the last message)
-    const previousMessages = uniqueMessages.slice(0, -1)
+    // Get only the last user message and previous context
+    const lastMessage = messages[messages.length - 1];
+    const previousMessages = messages.slice(0, -1)
       .filter((msg: ChatMessage) => msg.role !== 'system')
       .map((msg: ChatMessage) => ({
         role: msg.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: msg.content }]
       }));
 
-    if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
-      throw new Error('Missing Gemini API key');
-    }
-
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-    
     const chat = model.startChat({
       history: previousMessages,
       generationConfig: {
-        maxOutputTokens: 1024,
-      },
+        temperature: 1,
+        topP: 0.95,
+        topK: 40,
+        maxOutputTokens: 8192,
+        responseMimeType: "text/plain",
+      }
     });
 
     // Create a streaming response
@@ -53,21 +43,21 @@ export async function POST(req: Request) {
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          const result = await chat.sendMessageStream(lastUserMessage);
-          let previousText = ''; // Used to prevent duplication
+          const result = await chat.sendMessageStream(lastMessage.content);
+          let previousChunk = '';
 
           for await (const chunk of result.stream) {
-            const chunkText = chunk.text().trim(); // Trim to clean up extra spaces
-
-            // Prevent duplicate responses
-            if (chunkText && chunkText !== previousText) {
+            const chunkText = chunk.text().trim();
+            
+            // Only send non-empty and non-duplicate chunks
+            if (chunkText && chunkText !== previousChunk) {
               controller.enqueue(encoder.encode(chunkText + ' '));
-              previousText = chunkText;
+              previousChunk = chunkText;
             }
           }
-          
           controller.close();
         } catch (error) {
+          console.error('Streaming error:', error);
           controller.error(error);
         }
       },
@@ -80,7 +70,7 @@ export async function POST(req: Request) {
         'X-Content-Type-Options': 'nosniff',
       },
     });
-    
+
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json(
@@ -88,5 +78,5 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
-} 
+}
 
