@@ -35,8 +35,8 @@ const cardVariants = {
 const useCases = [
   {
     icon: <Monitor className="w-8 h-8" />,
-    title: "IT Support & Management",
-    description: "Remote device management and support for IT teams.",
+    title: "Remote Desktop Access",
+    description: "Secure and seamless remote access to any device, anywhere.",
     features: [
       "Real-time device monitoring",
       "Remote troubleshooting",
@@ -47,8 +47,8 @@ const useCases = [
   },
   {
     icon: <BookOpen className="w-8 h-8" />,
-    title: "Education & Training",
-    description: "Interactive learning and training solutions.",
+    title: "Screen Sharing & Collaboration",
+    description: "Real-time screen sharing and collaborative workspace solutions.",
     features: [
       "Interactive screen sharing",
       "Multi-device support",
@@ -59,8 +59,8 @@ const useCases = [
   },
   {
     icon: <Building className="w-8 h-8" />,
-    title: "Business Operations",
-    description: "Streamline workflows and enhance productivity.",
+    title: "Enterprise Remote Solutions",
+    description: "Comprehensive remote access tools for enterprise environments.",
     features: [
       "Team collaboration",
       "Process automation",

@@ -35,27 +35,27 @@ const cardVariants = {
 const benefits = [
   {
     icon: <Shield className="w-6 h-6" />,
-    title: "Enterprise Security",
-    description: "End-to-end encryption, secure authentication, and industry compliance standards.",
-    features: ["Data encryption", "Secure protocols", "Access control", "Audit logs"]
+    title: "Secure Device Control",
+    description: "Remote device management with enterprise-grade security and access controls.",
+    features: ["Screen mirroring", "Remote actions", "Secure connection", "Access logs"]
   },
   {
     icon: <Server className="w-6 h-6" />,
-    title: "Scalable Infrastructure",
-    description: "Cloud-native architecture designed for high availability and performance.",
-    features: ["Auto-scaling", "Load balancing", "Multi-region", "High availability"]
+    title: "Advanced Monitoring",
+    description: "Comprehensive device monitoring and real-time data collection capabilities.",
+    features: ["System metrics", "Performance tracking", "Event logging", "Status alerts"]
   },
   {
-    icon: <Users className="w-6 h-6" />,
-    title: "Team Collaboration",
-    description: "Multi-user support with role-based access control and team features.",
-    features: ["User roles", "Team spaces", "Shared access", "Activity tracking"]
+    icon: <Zap className="w-6 h-6" />,
+    title: "Powerful Actions",
+    description: "Execute remote actions and manage devices with precision and reliability.",
+    features: ["Partition dumping", "System commands", "File transfer", "Device control"]
   },
   {
-    icon: <Lock className="w-6 h-6" />,
-    title: "Compliance Ready",
-    description: "Built to meet enterprise compliance requirements and security standards.",
-    features: ["GDPR", "HIPAA", "SOC 2", "ISO 27001"]
+    icon: <Globe className="w-6 h-6" />,
+    title: "Cross-Platform Support",
+    description: "Seamless compatibility across different device types and operating systems.",
+    features: ["Android support", "Multi-device", "Real-time sync", "Custom protocols"]
   }
 ];
 

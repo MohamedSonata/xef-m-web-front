@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useChatLogic } from './hooks/useChatLogic';
 import { MessageContent } from './components/MessageContent';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './ChatPage.module.css';
+
+
 
 export default function ChatPage() {
   const {
@@ -145,7 +144,6 @@ export default function ChatPage() {
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
-              // Auto-adjust height
               e.target.style.height = 'auto';
               e.target.style.height = `${e.target.scrollHeight}px`;
             }}
@@ -157,8 +155,12 @@ export default function ChatPage() {
             }}
             className="flex-1 p-3 border border-gray-200 rounded-xl bg-gray-50 
               text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]
-              resize-none overflow-hidden min-h-[52px] max-h-[200px]"
-            placeholder="Type your message... (Press Shift + Enter for new line)"
+              resize-none overflow-hidden min-h-[52px] max-h-[200px]
+              placeholder:text-gray-500 mobile-placeholder
+              text-sm sm:text-base
+              placeholder:text-sm sm:placeholder:text-base"
+            placeholder="Type your message..."
+            data-long-placeholder="Type your message... (Press Shift + Enter for new line)"
             disabled={isLoading}
             rows={1}
           />

@@ -36,7 +36,7 @@ export default function SupportPage() {
                 <div>
                   <h4 className="font-medium mb-1">Email</h4>
                   <a href="mailto:support@xefromirror.com" className="text-[var(--text-secondary)] hover:text-white">
-                    support@xefromirror.com
+                    support@xefro.net
                   </a>
                 </div>
               </div>

@@ -16,12 +16,15 @@ export default function BannerVideo() {
         poster={IMAGES.xefroMirrorVideoThumb}
         className="w-full h-auto"
         style={{ objectFit: 'contain' }}
+        controlsList="nodownload nofullscreen noremoteplayback" 
+        disablePictureInPicture
+        onContextMenu={(e) => e.preventDefault()}
       >
         <source 
           src={IMAGES.appShowCaseMP4} 
           type="video/mp4"
         />
-        Your browser does not support the video tag.
+        Your browser does not support the video Playback.
       </video>
     </div>
   );
