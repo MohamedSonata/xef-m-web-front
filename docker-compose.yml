@@ -38,5 +38,5 @@ services:
 
 networks:
   webnet:
-    driver: overlay
+    driver: bridge
     attachable: true

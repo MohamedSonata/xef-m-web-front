@@ -5,7 +5,6 @@ import { appHandler } from "@/utils/appHandler";
 
 export function GetStartedButton() {
   const handleGetStarted = async () => {
-    console.log('Checking app installation...');
     await appHandler.handleGetStarted();
   };
 

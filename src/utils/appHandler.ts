@@ -45,8 +45,8 @@ export const appHandler = {
         } else {
           throw new Error('Content window not available');
         }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
-        console.error('Error checking app installation:', error);
         cleanUp();
         resolve(false);
       }
@@ -57,8 +57,8 @@ export const appHandler = {
     try {
       window.location.href = `${APP_PROTOCOL}launch`;
       return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error('Failed to open app:', error);
       return false;
     }
   },
@@ -73,14 +73,14 @@ export const appHandler = {
       const isInstalled = await appHandler.isAppInstalled();
       
       if (isInstalled) {
-        console.log('App is installed, opening...');
+    
         appHandler.openApp();
       } else {
-        console.log('App not installed, redirecting to download...');
+    
         window.location.href = APP_DOWNLOAD_URL;
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error('Error handling get started:', error);
       window.location.href = APP_DOWNLOAD_URL;
     }
   }
